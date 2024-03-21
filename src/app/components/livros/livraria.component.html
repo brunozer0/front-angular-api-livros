@@ -1,0 +1,118 @@
+<router-outlet></router-outlet>
+<table class="table">
+    <thead>
+
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Titulo
+            <th scope="col">Autor</th>
+            <th scope="col">Editora</th>
+            <th scope="col">Descricao</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Publicação</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let livro of livros$ | async">
+            <th scope="row">{{livro.id}}</th>
+            <td>
+                {{livro.titulo}}
+            </td>
+            <td>
+                {{livro.autor}}
+            </td>
+            <td>
+                {{livro.editora}}
+            </td>
+            <td>
+                {{livro.descricao}}
+            </td>
+            <td>
+                {{livro.genero}}
+            </td>
+            <td>
+                {{livro.date}}
+            </td>
+
+
+            <td class="qualquercoisa">
+                <button class="btn btn-danger" href="#" (click)="remover(livro.id!)">Excluir</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalEdition"
+                    (click)="getCamposLivro(livro)">Editar</button>
+
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+<div class="modal" id="myModalEdition" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Livro</h5>
+                <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="col-4">
+                    <div class="mb-2">
+                        Id Livro
+                    </div>
+                    <input readonly type="text" class="form-control" [(ngModel)]="idLivro">
+                </div>
+
+                <div class="col-4">
+                    <div class="mb-2">
+                        Titulo
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="titulo">
+                </div>
+                <div class="col-6">
+                    <div class="mb-2">
+                        Autor
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="autor">
+                </div>
+                <div class="col-4">
+                    <div class="mb-2">
+                        Editora
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="editora">
+                </div>
+                <div class="col-8">
+                    <div class="mb-1">
+                        Descricao
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="descricao">
+                </div>
+                <div class="col-3">
+                    <div class="mb-1">
+                        Genero
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="genero">
+                </div>
+
+                <div class="col-4">
+                    <div class="mb-1">
+                        publicação
+                    </div>
+                    <input type="date" class="form-control" [(ngModel)]="date">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="atualizarLivro()">
+                    Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
