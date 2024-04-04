@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LivrosService } from 'src/app/services/livros.service';
 import { Ilivros } from 'src/app/models/Ilivros';
 import { Observable } from 'rxjs';
+import { LivroCadastradoService } from 'src/app/services/livro-cadastrado.service';
 
 @Component({
   selector: 'app-livraria',
@@ -21,13 +22,16 @@ export class LivrariaComponent {
   date: string = '';
 
 
-  constructor(private livrosService: LivrosService) {
+  constructor(private livrosService: LivrosService, private atualizacaoLivrosService: LivroCadastradoService) {
     this.getLivros();
   }
 
 
   getLivros(): void {
     this.livros$ = this.livrosService.getLivros();
+    this.atualizacaoLivrosService.livroCadastrado$.subscribe(() => {
+      this.getLivros();
+    });
   }
 
   getCamposLivro(livros: Ilivros): void {

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Ilivros } from 'src/app/models/Ilivros';
 import { LivrosService } from 'src/app/services/livros.service';
-import { LivrariaComponent } from '../livros/livraria.component';
-
+import { LivroCadastradoService } from 'src/app/services/livro-cadastrado.service';
 
 @Component({
   selector: 'app-cadastro-livro',
@@ -11,8 +10,6 @@ import { LivrariaComponent } from '../livros/livraria.component';
 })
 export class CadastroLivroComponent {
 
-
-
   titulo: string = '';
   autor: string = '';
   descricao: string = '';
@@ -20,7 +17,7 @@ export class CadastroLivroComponent {
   editora: string = ''
   date: string = '';
 
-  constructor(private livrosService: LivrosService, private livrariaComponent: LivrariaComponent) { }
+  constructor(private livrosService: LivrosService, private atualizacaoLivrosService: LivroCadastradoService) { }
 
   cadastrarLivro() {
     if (!this.titulo || !this.autor || !this.descricao ||
@@ -35,10 +32,12 @@ export class CadastroLivroComponent {
       genero: this.genero,
       date: this.date
     };
-    this.livrosService.cadastrarLivro(novoLivro)
-      .subscribe(() => this.livrariaComponent.getLivros())
-    this.limparInputs();
-    alert("livro cadastrado")
+    this.livrosService.cadastrarLivro(novoLivro).subscribe(() => {
+      this.atualizacaoLivrosService.notificarCadastroLivro();
+
+      this.limparInputs();
+      alert("livro cadastrado");
+    });
   }
 
   limparInputs() {
